@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spesial Edition</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(
+    ellipse at top,
+    #3a1024,
+    #190b16 48%,
+    #100b12
+  );
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffb14a;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg, #ff3a89, #ffcc39, #28e3b0
+  );
+  color: #24101b;
+  font-size: 25px;
+}
+
+.live-status {
+  padding: 10px 14px;
+  border: 1px solid #633044;
+  border-radius: 30px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.live-status::before {
+  content: "● ";
+  color: #ff356d;
+}
+
+.container {
+  max-width: 850px;
+  margin: auto;
+  padding: 18px 20px 40px;
+}
+
+.tagline {
+  margin: 32px 0 48px;
+  text-align: center;
+  color: #55e9c1;
+  font-size: 13px;
+  letter-spacing: 4px;
+}
+
+.categories {
+  display: flex;
+  justify-content: space-around;
+  gap: 16px;
+  margin: 48px 0 60px;
+  padding: 18px 0;
+  border-top: 1px solid #39202c;
+  border-bottom: 1px solid #39202c;
+  color: #c7b7c0;
+  font-size: 12px;
+  letter-spacing: 2px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.categories span:nth-child(2) { color: #31c6e7; }
+.categories span:nth-child(3) { color: #9564ff; }
+.categories span:nth-child(4) { color: #df55d7; }
+
+h2 {
+  margin-bottom: 30px;
+  color: #ffb04a;
+  font-size: 30px;
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 18px;
+}
+
+.channel {
+  min-width: 0;
+  cursor: pointer;
+}
+
+.poster {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  border: 2px solid #ff4d91;
+  border-radius: 22px;
+  background: #000;
+}
+
+.channel:nth-child(2) .poster { border-color: #ffe26c; }
+.channel:nth-child(3) .poster { border-color: #61f6ae; }
+.channel:nth-child(4) .poster { border-color: #4cebd9; }
+
+.poster video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+.ch-number,
+.live-label {
+  position: absolute;
+  top: 12px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  pointer-events: none;
+}
+
+.ch-number {
+  left: 12px;
+  background: #ffcd38;
+  color: #27121a;
+}
+
+.live-label {
+  right: 12px;
+  background: #ff326b;
+  color: white;
+}
+
+.channel-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.channel-name {
+  color: #ff5b91;
+  font-weight: bold;
+}
+
+.channel:nth-child(2) .channel-name {
+  color: #ffb64b;
+}
+
+.viewer {
+  color: #c6b8c1;
+}
+
+@media (max-width: 420px) {
+  .brand { font-size: 18px; }
+  .live-status { font-size: 9px; }
+  .poster { height: 145px; }
+
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">▶</div>
+    SPESIAL EDITION
+  </div>
+
+  <div class="live-status">SEDANG TAYANG</div>
+</header>
+
+<main class="container">
+
+  <div class="tagline">
+    STREAMING 24 JAM · 8 SALURAN
+  </div>
+
+  <div class="categories">
+    <span>LAHRAGA</span>
+    <span>● DRAMA</span>
+    <span>● ANIME</span>
+    <span>● DOKUMENTER</span>
+  </div>
+
+  <h2>Semua Saluran</h2>
+
+  <section class="channels" id="channels"></section>
+
+</main>
+
+<script>
+
+// ==========================================
+// DATA 8 SALURAN DAN LINK IKLAN MASING-MASING
+// ==========================================
+
+const channelData = [
+
+  {
+    name: "Saluran Utama",
+    viewers: "12.4K",
+    video: "ap1.mp4",
+    ad: "https://arwf.org/4/d566a5b59c764899cc8a30bc6a8cf69e"
+  },
+
+  {
+    name: "Film Pilihan",
+    viewers: "8.1K",
+    video: "ap2.mp4",
+    ad: "https://balancedsuppercreed.com/w3dn2t539?key=7944d6da018b083c77b5471910a95766"
+  },
+
+  {
+    name: "Channel 03",
+    viewers: "6.8K",
+    video: "ap3.mp4",
+    ad: "https://criminaldissolved.com/f75ybzid2?key=d566a5b59c764899cc8a30bc6a8cf69e"
+  },
+
+  {
+    name: "Channel 04",
+    viewers: "5.2K",
+    video: "ap4.mp4",
+    ad: "https://arwf.org/4/d566a5b59c764899cc8a30bc6a8cf69e"
+  },
+
+  {
+    name: "Channel 05",
+    viewers: "4.9K",
+    video: "ap5.mp4",
+    ad: "https://criminaldissolved.com/f75ybzid2?key=d566a5b59c764899cc8a30bc6a8cf69e"
+  },
+
+  {
+    name: "Channel 06",
+    viewers: "3.7K",
+    video: "ap6.mp4",
+    ad: "https://balancedsuppercreed.com/w3dn2t539?key=7944d6da018b083c77b5471910a95766"
+  },
+
+  {
+    name: "Channel 07",
+    viewers: "2.5K",
+    video: "ap7.mp4",
+    ad: "https://nestlemustardghetto.com/a1jfwggvdm?key=2c4cfc3e67a9461a86dc0a3c4f1d6346"
+  },
+
+  {
+    name: "Channel 08",
+    viewers: "1.9K",
+    video: "ap8.mp4",
+    ad: "https://arwf.org/4/d566a5b59c764899cc8a30bc6a8cf69e"
+  }
+
+];
+
+
+// ==========================================
+// MEMBUAT 8 SALURAN
+// ==========================================
+
+const list = document.getElementById("channels");
+
+channelData.forEach((channel, index) => {
+
+  const card = document.createElement("div");
+
+  card.className = "channel";
+
+  card.innerHTML = `
+    <div class="poster">
+
+      <video
+        src="${channel.video}"
+        controls
+        playsinline
+        preload="metadata"
+        muted
+      ></video>
+
+      <span class="ch-number">
+        CH ${String(index + 1).padStart(2, "0")}
+      </span>
+
+      <span class="live-label">LIVE</span>
+
+    </div>
+
+    <div class="channel-info">
+      <span class="channel-name">${channel.name}</span>
+      <span class="viewer">${channel.viewers}</span>
+    </div>
+  `;
+
+  // Klik saluran membuka link iklan saluran tersebut.
+  card.addEventListener("click", function(event) {
+
+    // Klik kontrol video tidak membuka iklan.
+    if (event.target.closest("video")) {
+      return;
+    }
+
+    window.open(
+      channel.ad,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+  });
+
+  list.appendChild(card);
+
+});
+
+
+// ==========================================
+// KLIK DI LUAR SALURAN MEMBUKA IKLAN
+// ==========================================
+
+// Link iklan untuk klik di luar saluran.
+const OUTSIDE_AD =
+  "https://arwf.org/4/d566a5b59c764899cc8a30bc6a8cf69e";
+
+document.addEventListener("click", function(event) {
+
+  // Jika klik berada di dalam saluran,
+  // gunakan link iklan milik saluran tersebut.
+  if (event.target.closest(".channel")) {
+    return;
+  }
+
+  // Klik di luar saluran membuka iklan.
+  window.open(
+    OUTSIDE_AD,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+});
+
+</script>
+
+</body>
+</html>
